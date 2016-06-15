@@ -6,7 +6,7 @@ import testinfrastructure.*;
 
 import java.io.File;
 
-public class PopularTagsAreAdded extends AcceptanceTest {
+public class PopularTagsAreAddedTest extends AcceptanceTest {
 
     private final GivenAUserRoamingConfigStore anExistingConfiguration = new GivenAUserRoamingConfigStore(testInfrastructure);
     private final GivenTagsOnSteamForApp theSteamAppPage = new GivenTagsOnSteamForApp(testInfrastructure);
