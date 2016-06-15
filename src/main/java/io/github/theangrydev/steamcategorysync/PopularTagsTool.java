@@ -1,6 +1,5 @@
 package io.github.theangrydev.steamcategorysync;
 
-import com.slugsource.vdf.lib.InvalidFileException;
 import com.slugsource.vdf.lib.Node;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -8,13 +7,8 @@ import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,18 +18,18 @@ public class PopularTagsTool {
 
     public static void main(String[] arguments) {
         if (arguments.length != 1) {
-            throw new IllegalArgumentException("First argument should be the file to modify");
+            throw new IllegalArgumentException("First argument should be the sharedconfig.vdf file");
         }
-        if (isProcessRunning("steam.exe")) {
+        if (IsProcessRunning.isProcessRunning("steam.exe")) {
             throw new IllegalStateException("Close the Steam client before running this!");
         }
         File configFile = Paths.get(arguments[0]).toFile();
         if (!configFile.exists()) {
             throw new IllegalArgumentException("Config file does not exist: " + configFile);
         }
-        backup(configFile);
+        BackupFile.backup(configFile);
 
-        Node userRoamingConfigStore = userRoamingConfigStore(configFile);
+        Node userRoamingConfigStore = VDFFileReader.readVDFFile(configFile);
         Node apps = userRoamingConfigStore.getNode("Software").getNode("Valve").getNode("Steam").getNode("apps");
         for (Node app : apps.getChildren()) {
             String appId = app.getName();
@@ -57,15 +51,7 @@ public class PopularTagsTool {
                 tagsNode.addNode(new Node(String.valueOf(order++), tagToAdd));
             }
         }
-        writeToFile(configFile, userRoamingConfigStore);
-    }
-
-    private static void writeToFile(File configFile, Node userRoamingConfigStore) {
-        try {
-            userRoamingConfigStore.writeToFile(configFile);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not write to file: " + configFile);
-        }
+        VDFFileWriter.writeToFile(configFile, userRoamingConfigStore);
     }
 
     private static Integer lastOrder(Node tagsNode) {
@@ -74,15 +60,6 @@ public class PopularTagsTool {
                 .map(Node::getName)
                 .map(Integer::parseInt)
                 .orElse(-1);
-    }
-
-    private static void backup(File configFile) {
-        try {
-            Path backupFile = configFile.toPath().getParent().resolve(configFile.getName() + ".bak");
-            Files.copy(configFile.toPath(), backupFile, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not backup file: " + configFile, e);
-        }
     }
 
     private static Set<String> popularTags(String appId) {
@@ -102,34 +79,4 @@ public class PopularTagsTool {
         }
     }
 
-    private static Node userRoamingConfigStore(File file) {
-        try {
-            return Node.readFromFile(file);
-        } catch (InvalidFileException | IOException e) {
-            throw new RuntimeException("Could not read file: " + file, e);
-        }
-    }
-
-    // http://stackoverflow.com/a/19005828/3764804
-    private static boolean isProcessRunning(String processName) {
-        ProcessBuilder processBuilder = new ProcessBuilder("tasklist.exe");
-        Process process = startProcess(processBuilder);
-        String tasksList = toString(process.getInputStream()).toLowerCase();
-        return tasksList.contains(processName.toLowerCase());
-    }
-
-    private static Process startProcess(ProcessBuilder processBuilder) {
-        try {
-            return processBuilder.start();
-        } catch (IOException e) {
-            throw new RuntimeException("Could not start process", e);
-        }
-    }
-
-    // http://stackoverflow.com/a/5445161/3764804
-    private static String toString(InputStream inputStream) {
-        try (Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter("\\A")) {
-            return scanner.hasNext() ? scanner.next() : "";
-        }
-    }
 }
