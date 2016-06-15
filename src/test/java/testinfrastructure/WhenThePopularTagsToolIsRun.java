@@ -7,17 +7,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class WhenTheToolIsRun implements When<File, File> {
+public class WhenThePopularTagsToolIsRun implements When<File, File> {
 
     private final TestInfrastructure testInfrastructure;
 
     private String fileName;
 
-    public WhenTheToolIsRun(TestInfrastructure testInfrastructure) {
+    public WhenThePopularTagsToolIsRun(TestInfrastructure testInfrastructure) {
         this.testInfrastructure = testInfrastructure;
     }
 
-    public WhenTheToolIsRun againstConfigFile(String fileName) {
+    public WhenThePopularTagsToolIsRun againstConfigFile(String fileName) {
         this.fileName = fileName;
         return this;
     }

@@ -1,6 +1,10 @@
 package io.github.theangrydev.steamcategorysync;
 
 import com.slugsource.vdf.lib.Node;
+import io.github.theangrydev.steamcategorysync.shared.BackupFile;
+import io.github.theangrydev.steamcategorysync.shared.IsProcessRunning;
+import io.github.theangrydev.steamcategorysync.shared.VDFFileReader;
+import io.github.theangrydev.steamcategorysync.shared.VDFFileWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

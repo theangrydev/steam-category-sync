@@ -10,8 +10,8 @@ public class PopularTagsAreAddedTest extends AcceptanceTest {
 
     private final GivenAUserRoamingConfigStore anExistingConfiguration = new GivenAUserRoamingConfigStore(testInfrastructure);
     private final GivenTagsOnSteamForApp theSteamAppPage = new GivenTagsOnSteamForApp(testInfrastructure);
-    private final WhenTheToolIsRun theToolIsRun = new WhenTheToolIsRun(testInfrastructure);
-    private final ThenFactory<ThenTheConfigFile, File> theConfigFile = ThenTheConfigFile::new;
+    private final WhenThePopularTagsToolIsRun theToolIsRun = new WhenThePopularTagsToolIsRun(testInfrastructure);
+    private final ThenFactory<ThenTheUserRoamingConfigStore, File> theConfigFile = ThenTheUserRoamingConfigStore::new;
 
     @Test
     public void popularTagsFromTheSteamStorePageAreAddedToMultipleApps() {
@@ -28,5 +28,6 @@ public class PopularTagsAreAddedTest extends AcceptanceTest {
         and(theConfigFile).hasAppWithTags("440", "All", "FPS", "Action", "Online");
         and(theConfigFile).hasAppWithTags("439880", "Adventure");
         and(theConfigFile).hasSequentialTagsStartingAtZero();
+        and(theConfigFile).hasBackupCopyWithName("sharedconfig.vdf.bak");
     }
 }

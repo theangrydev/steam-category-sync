@@ -14,11 +14,11 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ThenTheConfigFile {
+public class ThenTheUserRoamingConfigStore {
 
     private final File configFile;
 
-    public ThenTheConfigFile(File configFile) {
+    public ThenTheUserRoamingConfigStore(File configFile) {
         this.configFile = configFile;
     }
 

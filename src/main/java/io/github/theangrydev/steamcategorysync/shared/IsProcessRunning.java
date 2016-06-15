@@ -1,4 +1,4 @@
-package io.github.theangrydev.steamcategorysync;
+package io.github.theangrydev.steamcategorysync.shared;
 
 import java.io.IOException;
 import java.io.InputStream;

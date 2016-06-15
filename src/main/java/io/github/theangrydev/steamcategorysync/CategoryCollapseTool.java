@@ -1,14 +1,16 @@
 package io.github.theangrydev.steamcategorysync;
 
 import com.slugsource.vdf.lib.Node;
+import io.github.theangrydev.steamcategorysync.shared.VDFFileReader;
+import io.github.theangrydev.steamcategorysync.shared.VDFFileWriter;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static io.github.theangrydev.steamcategorysync.BackupFile.backup;
-import static io.github.theangrydev.steamcategorysync.IsProcessRunning.isProcessRunning;
+import static io.github.theangrydev.steamcategorysync.shared.BackupFile.backup;
+import static io.github.theangrydev.steamcategorysync.shared.IsProcessRunning.isProcessRunning;
 
 public class CategoryCollapseTool {
 
@@ -36,8 +38,8 @@ public class CategoryCollapseTool {
         VDFFileWriter.writeToFile(configFile, userConfigData);
     }
 
-    private static void collapse(Node nodeWithCollapsers) {
-        Node collapsers = nodeWithCollapsers.getNode("Collapsers");
+    private static void collapse(Node gamesList) {
+        Node collapsers = gamesList.getNode("Collapsers");
         for (Node collapser : collapsers.getChildren()) {
             collapser.setValue(COLLAPSED_VALUE);
         }
@@ -46,7 +48,7 @@ public class CategoryCollapseTool {
                 .map(x -> x.getName().replaceFirst("U:", "") + "_collapsed")
                 .collect(Collectors.toSet());
 
-        nodeWithCollapsers.getChildren().stream()
+        gamesList.getChildren().stream()
                 .filter(x -> sections.contains(x.getName()))
                 .forEach(node -> node.setValue(COLLAPSED_VALUE));
     }

@@ -1,4 +1,4 @@
-package io.github.theangrydev.steamcategorysync;
+package io.github.theangrydev.steamcategorysync.shared;
 
 import com.slugsource.vdf.lib.Node;
 
