@@ -86,10 +86,9 @@ public class Tool {
 
     private static Set<String> popularTags(String appId) {
         Document document = documentAtUrl(System.getProperty("steam.url", "http://store.steampowered.com") + "/app/" + appId);
-        return document.select(".app_tag").stream()
+        return document.select(".app_tag:not(.add_button)").stream()
                 .map(Element::text)
                 .map(String::trim)
-                .filter(x -> !"+".equals(x))
                 .collect(toSet());
     }
 
