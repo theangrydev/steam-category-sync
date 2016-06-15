@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 
 @RunWith(SpecRunner.class)
-public class AcceptanceTest extends FluentTest<File, File> {
+public abstract class AcceptanceTest extends FluentTest<File, File> {
 
     @Rule
     public TemporaryFolder configFolder = new TemporaryFolder();
