@@ -59,6 +59,13 @@
             <version>3.4</version>
         </dependency>
 
+        <!-- Needed to scrape Steam -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
         <!-- Test dependencies -->
         <!-- Unit tests -->
         <dependency>
@@ -86,7 +93,7 @@
         <dependency>
             <groupId>io.github.theangrydev</groupId>
             <artifactId>yatspec-fluent</artifactId>
-            <version>1.2.1</version>
+            <version>1.4.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>

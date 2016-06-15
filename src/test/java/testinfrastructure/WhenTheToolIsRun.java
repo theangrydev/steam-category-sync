@@ -4,6 +4,8 @@ import io.github.theangrydev.steamcategorysync.Tool;
 import io.github.theangrydev.yatspecfluent.When;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class WhenTheToolIsRun implements When<File, File> {
 
@@ -28,6 +30,15 @@ public class WhenTheToolIsRun implements When<File, File> {
     @Override
     public File response(File configFile) {
         Tool.main(new String[]{configFile.getAbsolutePath()});
+        testInfrastructure.addToCapturedInputsAndOutputs("New " + configFile.getName(), readFile(configFile));
         return configFile;
+    }
+
+    private String readFile(File configFile) {
+        try {
+            return new String(Files.readAllBytes(configFile.toPath()));
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not read: " + configFile);
+        }
     }
 }

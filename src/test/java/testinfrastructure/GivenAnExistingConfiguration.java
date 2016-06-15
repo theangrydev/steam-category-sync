@@ -37,12 +37,14 @@ public class GivenAnExistingConfiguration implements Given {
 
     public GivenAnExistingConfiguration withApp(String appId, String... existingTags) {
         Node app = new Node(appId);
-        Node tags = new Node("tags");
-        app.addNode(tags);
+        if (existingTags.length > 0) {
+            Node tags = new Node("tags");
+            app.addNode(tags);
 
-        int order = 0;
-        for (String existingTag : existingTags) {
-            tags.addNode(new Node(String.valueOf(order), existingTag));
+            int order = 0;
+            for (String existingTag : existingTags) {
+                tags.addNode(new Node(String.valueOf(order++), existingTag));
+            }
         }
         apps.addNode(app);
         return this;
@@ -50,6 +52,7 @@ public class GivenAnExistingConfiguration implements Given {
 
     @Override
     public void prime() {
+        testInfrastructure.addToCapturedInputsAndOutputs("Old " + fileName, userRoamingConfigStore.toVdf());
         File configFile = testInfrastructure.createFile(fileName);
         try {
             userRoamingConfigStore.writeToFile(configFile);

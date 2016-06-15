@@ -1,11 +1,12 @@
 package com.slugsource.vdf.lib;
 
-import java.io.*;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Objects;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A node object that can hold either a value, or child node objects
@@ -17,9 +18,9 @@ public class Node
 
     private String name;
     private String value = null;
-    private LinkedList<Node> children = null;
+    private LinkedList<Node> children = new LinkedList<>();
 
-    public LinkedList<Node> getChildren() {
+    public List<Node> getChildren() {
         return children;
     }
 
@@ -86,7 +87,7 @@ public class Node
             throw new NullPointerException("Value cannot be null.");
         }
         this.value = value;
-        children = null;
+        children = new LinkedList<>();
     }
 
     /**
@@ -114,12 +115,6 @@ public class Node
             throw new NullPointerException("Name cannot be null.");
         }
 
-        // Check to see if this node holds children
-        if (children == null)
-        {
-            return null;
-        }
-
         // Get child node index
         int index = children.indexOf(new Node(name));
 
@@ -144,13 +139,6 @@ public class Node
         if (newNode == null)
         {
             throw new NullPointerException("Node cannot be null.");
-        }
-
-        // Check to see if this node holds children
-        if (children == null)
-        {
-            children = new LinkedList<Node>();
-            value = null;
         }
 
         boolean result = false;
@@ -195,11 +183,6 @@ public class Node
         }
 
         // Check to see if this node holds children
-        if (children == null)
-        {
-            return false;
-        }
-
         boolean success = children.remove(node);
 
         return success;
@@ -680,5 +663,14 @@ public class Node
         }
         assert output != null;
         return output;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", children=" + children +
+                '}';
     }
 }
