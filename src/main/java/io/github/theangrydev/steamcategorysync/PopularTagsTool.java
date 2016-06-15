@@ -18,7 +18,7 @@ public class PopularTagsTool {
 
     public static void main(String[] arguments) {
         if (arguments.length != 1) {
-            throw new IllegalArgumentException("First argument should be the sharedconfig.vdf file");
+            throw new IllegalArgumentException("First argument should be the 'Steam\\userdata\\XXXXX\\X\\remote\\sharedconfig.vdf' file");
         }
         if (IsProcessRunning.isProcessRunning("steam.exe")) {
             throw new IllegalStateException("Close the Steam client before running this!");

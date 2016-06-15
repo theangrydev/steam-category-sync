@@ -15,10 +15,8 @@ public class CategoryCollapseTool {
     private static final String COLLAPSED_VALUE = "1";
 
     public static void main(String[] arguments) {
-        arguments = new String[]{"C:\\Program Files (x86)\\Steam\\config\\DialogConfig.vdf"};
-
         if (arguments.length != 1) {
-            throw new IllegalArgumentException("First argument should be the DialogConfig.vdf file");
+            throw new IllegalArgumentException("First argument should be the 'Steam\\config\\DialogConfig.vdf' file");
         }
         if (isProcessRunning("steam.exe")) {
             throw new IllegalStateException("Close the Steam client before running this!");
