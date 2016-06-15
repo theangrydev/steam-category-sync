@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
 
-public class Tool {
+public class PopularTagsTool {
 
     public static void main(String[] arguments) {
         if (arguments.length != 1) {

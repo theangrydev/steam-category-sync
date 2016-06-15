@@ -1,6 +1,6 @@
 package testinfrastructure;
 
-import io.github.theangrydev.steamcategorysync.Tool;
+import io.github.theangrydev.steamcategorysync.PopularTagsTool;
 import io.github.theangrydev.yatspecfluent.When;
 
 import java.io.File;
@@ -29,7 +29,7 @@ public class WhenTheToolIsRun implements When<File, File> {
 
     @Override
     public File response(File configFile) {
-        Tool.main(new String[]{configFile.getAbsolutePath()});
+        PopularTagsTool.main(new String[]{configFile.getAbsolutePath()});
         testInfrastructure.addToCapturedInputsAndOutputs("New " + configFile.getName(), readFile(configFile));
         return configFile;
     }
