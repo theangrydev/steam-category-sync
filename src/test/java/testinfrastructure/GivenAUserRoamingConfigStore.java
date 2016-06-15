@@ -6,7 +6,7 @@ import io.github.theangrydev.yatspecfluent.Given;
 import java.io.File;
 import java.io.IOException;
 
-public class GivenAnExistingConfiguration implements Given {
+public class GivenAUserRoamingConfigStore implements Given {
 
     private final TestInfrastructure testInfrastructure;
 
@@ -15,7 +15,7 @@ public class GivenAnExistingConfiguration implements Given {
     private Node userRoamingConfigStore;
     private Node apps;
 
-    public GivenAnExistingConfiguration(TestInfrastructure testInfrastructure) {
+    public GivenAUserRoamingConfigStore(TestInfrastructure testInfrastructure) {
         this.testInfrastructure = testInfrastructure;
 
         userRoamingConfigStore = new Node("UserRoamingConfigStore");
@@ -30,12 +30,12 @@ public class GivenAnExistingConfiguration implements Given {
         steam.addNode(apps);
     }
 
-    public GivenAnExistingConfiguration inFile(String fileName) {
+    public GivenAUserRoamingConfigStore inFile(String fileName) {
         this.fileName = fileName;
         return this;
     }
 
-    public GivenAnExistingConfiguration withApp(String appId, String... existingTags) {
+    public GivenAUserRoamingConfigStore withApp(String appId, String... existingTags) {
         Node app = new Node(appId);
         if (existingTags.length > 0) {
             Node tags = new Node("tags");

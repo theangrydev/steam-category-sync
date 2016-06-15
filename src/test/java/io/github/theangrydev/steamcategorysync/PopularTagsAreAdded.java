@@ -8,7 +8,7 @@ import java.io.File;
 
 public class PopularTagsAreAdded extends AcceptanceTest {
 
-    private final GivenAnExistingConfiguration anExistingConfiguration = new GivenAnExistingConfiguration(testInfrastructure);
+    private final GivenAUserRoamingConfigStore anExistingConfiguration = new GivenAUserRoamingConfigStore(testInfrastructure);
     private final GivenTagsOnSteamForApp theSteamAppPage = new GivenTagsOnSteamForApp(testInfrastructure);
     private final WhenTheToolIsRun theToolIsRun = new WhenTheToolIsRun(testInfrastructure);
     private final ThenFactory<ThenTheConfigFile, File> theConfigFile = ThenTheConfigFile::new;
