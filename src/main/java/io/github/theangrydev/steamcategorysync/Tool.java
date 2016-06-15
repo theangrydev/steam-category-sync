@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -78,13 +79,14 @@ public class Tool {
     private static void backup(File configFile) {
         try {
             Path backupFile = configFile.toPath().getParent().resolve(configFile.getName() + ".bak");
-            Files.copy(configFile.toPath(), backupFile);
+            Files.copy(configFile.toPath(), backupFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new IllegalStateException("Could not backup file: " + configFile, e);
         }
     }
 
     private static Set<String> popularTags(String appId) {
+        System.out.println("Fetching tags for app id " + appId);
         Document document = documentAtUrl(System.getProperty("steam.url", "http://store.steampowered.com") + "/app/" + appId);
         return document.select(".app_tag:not(.add_button)").stream()
                 .map(Element::text)
@@ -94,7 +96,7 @@ public class Tool {
 
     private static Document documentAtUrl(String url) {
         try {
-            return Jsoup.connect(url).get();
+            return Jsoup.connect(url).timeout(10_000).get();
         } catch (IOException e) {
             throw new RuntimeException("Could not fetch page: " + url, e);
         }
